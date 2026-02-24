@@ -1,0 +1,5 @@
+{
+  "name": "Checkmate Stats",
+  "description": "A mobile-first Chess.com player dashboard visualizing stats, match history, and rating trends.",
+  "requestFramePermissions": []
+}
