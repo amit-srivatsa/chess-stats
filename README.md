@@ -85,4 +85,21 @@ Feel free to fork, modify, and use this project as a reference for your own work
 
 ---
 
+## Attribution & Credits
+
+If you find this project helpful and decide to use it or build upon it, I'd appreciate a credit! Here are a few ways you can do so:
+
+- **Add a link in your project's README:**
+  ```markdown
+  Built with inspiration from [Chess Stats Dashboard](https://github.com/amit-srivatsa/chess-stats) by [Amit Srivatsa](https://github.com/amit-srivatsa)
+  ```
+
+- **GitHub Star**: If you found this useful, consider giving it a ⭐ on [GitHub](https://github.com/amit-srivatsa/chess-stats)
+
+- **Mention in your project**: Link back to this repository or mention it in your project documentation
+
+Attribution helps support open-source development and is greatly appreciated!
+
+---
+
 **Try it out**: Search for any Chess.com username to see their stats instantly!
