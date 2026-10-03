@@ -71,7 +71,7 @@ React 19, TypeScript, Vite, Recharts, Lucide icons, Tailwind (CDN), chess.js, ht
 
 GPL-3.0-or-later. See [LICENSE](LICENSE).
 
-The app ships [Stockfish.js](https://github.com/nmrugg/stockfish.js) (Stockfish 19, lite single-threaded build) by Nathan Rugg and Chess.com, LLC, which is licensed under GPL-3.0. Stockfish itself is by [the Stockfish team](https://github.com/official-stockfish/Stockfish). Because the engine is distributed with the app, the app is licensed under the GPL too. chess.js is BSD-2-Clause. The board uses the cburnett piece set by [Colin M.L. Burnett](https://en.wikipedia.org/wiki/User:Cburnett) (GPLv2+, via [Lichess](https://github.com/lichess-org/lila)), in `public/pieces/cburnett/`.
+The app ships [Stockfish.js](https://github.com/nmrugg/stockfish.js) (Stockfish 19, lite single-threaded build) by Nathan Rugg and Chess.com, LLC, which is licensed under GPL-3.0. Stockfish itself is by [the Stockfish team](https://github.com/official-stockfish/Stockfish). Because the engine is distributed with the app, the app is licensed under the GPL too. chess.js is BSD-2-Clause. The board uses the classic cburnett piece set by [Colin M.L. Burnett](https://en.wikipedia.org/wiki/User:Cburnett) (GPLv2+, via [Lichess](https://github.com/lichess-org/lila)), in `public/pieces/cburnett/`.
 
 Game data comes from the [Chess.com Published-Data API](https://www.chess.com/news/view/published-data-api).
 

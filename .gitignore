@@ -30,3 +30,9 @@ dist-ssr
 
 # Stockfish build, copied from node_modules by scripts/copy-engine.mjs
 public/engine/
+
+# Private: post drafts and personal notes stay local (never committed)
+private/
+POST-DRAFT.md
+LINKEDIN_POST.md
+*.private.md
