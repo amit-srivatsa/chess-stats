@@ -84,6 +84,8 @@ export interface ChessGame {
   rules: string;
   white: ChessGamePlayer;
   black: ChessGamePlayer;
+  eco?: string; // opening URL, e.g. https://www.chess.com/openings/Sicilian-Defense...
+  accuracies?: { white: number; black: number };
 }
 
 export interface ArchivesResponse {

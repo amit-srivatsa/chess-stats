@@ -9,7 +9,11 @@ import PerformanceChart from './components/PerformanceChart';
 import GameList from './components/GameList';
 import { getProfile, getStats, getRecentGames } from './services/chessApi';
 import { ChessPlayerProfile, ChessPlayerStats, ChessGame } from './types';
-import { AlertCircle, Zap, Trophy, Brain } from 'lucide-react';
+import WhyILose from './components/why/WhyILose';
+import { AlertCircle, Zap, Trophy, Brain, LayoutDashboard, Target } from 'lucide-react';
+
+type Tab = 'dashboard' | 'why';
+const tabFromHash = (): Tab => (window.location.hash === '#why' ? 'why' : 'dashboard');
 
 const DEFAULT_USER = 'peeves73';
 
@@ -22,6 +26,7 @@ function App() {
   const [stats, setStats] = useState<ChessPlayerStats | null>(null);
   const [games, setGames] = useState<ChessGame[]>([]);
   
+  const [tab, setTab] = useState<Tab>(tabFromHash);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -55,9 +60,40 @@ function App() {
     fetchData(username);
   }, [fetchData, username]);
 
+  useEffect(() => {
+    const onHash = () => setTab(tabFromHash());
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+
+  const openTab = (t: Tab) => {
+    setTab(t);
+    window.history.replaceState(null, '', t === 'why' ? '#why' : window.location.pathname + window.location.search);
+  };
+
   return (
     <Layout>
       <Header onSearch={(u) => setUsername(u)} isLoading={isLoading} />
+
+      <nav className="flex gap-2 mb-8" aria-label="Views">
+        {([
+          ['dashboard', 'Dashboard', LayoutDashboard],
+          ['why', 'Why I lose', Target],
+        ] as const).map(([key, label, Icon]) => (
+          <button
+            key={key}
+            onClick={() => openTab(key)}
+            aria-current={tab === key ? 'page' : undefined}
+            className={`inline-flex items-center gap-2 px-4 py-2 rounded-2xl text-sm font-medium transition-colors ${
+              tab === key ? 'bg-gray-900 text-white shadow-sm' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
+            }`}
+          >
+            <Icon className="w-4 h-4" /> {label}
+          </button>
+        ))}
+      </nav>
+
+      {tab === 'why' && <WhyILose username={username} />}
 
       {error && (
         <div className="bg-red-50 border border-red-100 text-red-600 p-4 rounded-2xl mb-8 flex items-center gap-3">
@@ -66,7 +102,7 @@ function App() {
         </div>
       )}
 
-      {isLoading && (
+      {tab === 'dashboard' && isLoading && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-pulse">
            <div className="h-48 bg-gray-200 rounded-3xl md:col-span-3"></div>
            <div className="h-64 bg-gray-200 rounded-3xl"></div>
@@ -75,7 +111,7 @@ function App() {
         </div>
       )}
 
-      {!isLoading && profile && stats && (
+      {tab === 'dashboard' && !isLoading && profile && stats && (
         <div className="space-y-6">
           <ProfileCard profile={profile} stats={stats} />
           
