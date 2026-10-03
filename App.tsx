@@ -67,10 +67,20 @@ function App() {
     setProfile(null); 
     
     try {
+      const profilePromise = getProfile(user);
+      const statsPromise = getStats(user).catch((e) => {
+        console.warn('Could not fetch stats for player:', e);
+        return null;
+      });
+      const gamesPromise = getRecentGames(user).catch((e) => {
+        console.warn('Could not fetch recent games for player:', e);
+        return [];
+      });
+
       const [profileData, statsData, gamesData] = await Promise.all([
-        getProfile(user),
-        getStats(user),
-        getRecentGames(user)
+        profilePromise,
+        statsPromise,
+        gamesPromise,
       ]);
 
       setProfile(profileData);
@@ -93,13 +103,14 @@ function App() {
     const clean = newUsername.trim().toLowerCase();
     if (!clean) return;
     setUsername(clean);
+    fetchData(clean);
 
     try {
       const url = new URL(window.location.href);
       url.searchParams.set('u', clean);
       window.history.replaceState(null, '', url.toString());
     } catch {}
-  }, []);
+  }, [fetchData]);
 
   const handleClear = useCallback(() => {
     setUsername('');
@@ -161,8 +172,8 @@ function App() {
         </div>
       )}
 
-      {/* When no user has been entered, or when lookup failed without a profile, show intake */}
-      {(!username || (!profile && !isLoading)) && (
+      {/* When no user has been entered, or when dashboard search yielded no profile and finished loading */}
+      {(!username || (tab === 'dashboard' && !profile && !isLoading)) && (
         <HeroIntake onSearch={handleSearch} isLoading={isLoading} />
       )}
 
