@@ -6,7 +6,7 @@ Built for [Buildtober](https://github.com/amit-srivatsa) day 3 (3 October 2026):
 
 **Live Demo**: [https://amit-srivatsa.github.io/chess-stats/](https://amit-srivatsa.github.io/chess-stats/)
 
-![Why I lose](docs/screenshots/02-why-i-lose-full.png)
+![Why I lose](docs/screenshots/01-why-i-lose.png)
 
 ## Two views
 
