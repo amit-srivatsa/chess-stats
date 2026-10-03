@@ -30,21 +30,17 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile, stats }) => {
   const otbRating = calculateOTB();
 
   return (
-    <div className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100 flex flex-col md:flex-row gap-8 items-center md:items-start transition-all hover:shadow-md relative overflow-hidden">
-      
-      {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-violet-50 rounded-full blur-3xl -mr-32 -mt-32 opacity-50 pointer-events-none"></div>
-
-      <div className="relative z-10">
-        <div className="rounded-full p-1 bg-gradient-to-br from-violet-500 to-cyan-400">
+    <div className="bg-paper-white rounded-card p-6 md:p-8 border border-border-subtle shadow-subtle flex flex-col md:flex-row gap-8 items-center md:items-start relative overflow-hidden">
+      <div className="relative z-10 shrink-0">
+        <div className="rounded-full p-0.5 border border-border-subtle">
            <img
-            src={profile.avatar || `https://ui-avatars.com/api/?name=${profile.username}&background=f3f4f6&color=111827`}
+            src={profile.avatar || `https://ui-avatars.com/api/?name=${profile.username}&background=f2f2f3&color=17191c`}
             alt={profile.username}
-            className="w-28 h-28 md:w-32 md:h-32 rounded-full object-cover border-4 border-white shadow-sm"
+            className="w-24 h-24 md:w-28 md:h-28 rounded-full object-cover"
           />
         </div>
         {profile.title && (
-          <span className="absolute bottom-0 right-0 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-sm border-2 border-white">
+          <span className="absolute bottom-0 right-0 bg-ink-black text-paper-white text-[10px] font-bold px-2 py-0.5 rounded-full border border-paper-white">
             {profile.title}
           </span>
         )}
@@ -53,26 +49,26 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ profile, stats }) => {
       <div className="flex-1 text-center md:text-left space-y-4 z-10">
         <div>
            <div className="flex flex-col md:flex-row items-center gap-3 justify-center md:justify-start">
-            <h2 className="text-3xl font-bold text-gray-900 tracking-tight">
+            <h2 className="font-serif text-3xl font-normal text-ink-black tracking-tight">
               {profile.username}
             </h2>
              {profile.status !== 'closed' && (
-                <CheckCircle2 className="w-5 h-5 text-violet-500" fill="currentColor" color="white" />
+                <CheckCircle2 className="w-4 h-4 text-slate-gray" />
              )}
           </div>
           {profile.name && (
-            <p className="text-gray-500 font-medium text-lg">{profile.name}</p>
+            <p className="text-slate-gray font-normal text-sm sm:text-base mt-0.5">{profile.name}</p>
           )}
         </div>
 
-        <div className="flex flex-wrap justify-center md:justify-start gap-4 text-sm text-gray-500">
+        <div className="flex flex-wrap justify-center md:justify-start gap-3 text-xs text-slate-gray">
           {profile.location && (
-            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-lg">
-              <MapPin className="w-4 h-4 text-violet-500" />
+            <div className="flex items-center gap-1.5 px-3 py-1 bg-mist-gray rounded-pill">
+              <MapPin className="w-3.5 h-3.5 text-slate-gray" />
               <span>{profile.location}</span>
             </div>
           )}
-          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-lg">
+          <div className="flex items-center gap-1.5 px-3 py-1 bg-mist-gray rounded-pill">
             <Users className="w-4 h-4 text-cyan-500" />
             <span>{profile.followers.toLocaleString()} Followers</span>
           </div>

@@ -8,6 +8,7 @@ import { verdict as buildVerdict } from '../../lib/headline';
 import { LossEndings, OpeningTable, ClockCard, TimeOfDay, TiltCard, RatingGapCard } from './Sections';
 import VerdictCard from './VerdictCard';
 import EngineView from './EngineView';
+import AnimatedPiece from '../AnimatedPiece';
 
 const SIZES = [50, 100, 300] as const;
 
@@ -97,22 +98,22 @@ const WhyILose: React.FC<{ username: string }> = ({ username }) => {
     <div className="space-y-6">
       {/* Controls */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-slate-gray">
           {loading && progress
             ? `Loading month ${progress.months} (${progress.games} games so far, ${progress.fromCache} from cache)...`
             : records.length
-              ? `${records.length} standard games, ${range}. Everything is computed in your browser.`
+              ? `${records.length} standard games, ${range}. Computed client-side in your browser.`
               : ''}
         </p>
-        <div className="flex items-center gap-2 text-sm">
-          <span className="text-gray-500">Games to read</span>
-          <div className="flex bg-white border border-gray-200 rounded-xl p-1">
+        <div className="flex items-center gap-2 text-xs">
+          <span className="text-ash-gray font-normal">Games to read</span>
+          <div className="flex bg-mist-gray rounded-pill p-1">
             {SIZES.map((n) => (
               <button
                 key={n}
                 onClick={() => changeSize(n)}
                 disabled={loading}
-                className={`px-3 py-1 rounded-lg font-medium transition-colors ${size === n ? 'bg-violet-600 text-white' : 'text-gray-600 hover:bg-gray-50'}`}
+                className={`px-3 py-1 rounded-pill font-normal transition-all ${size === n ? 'bg-ink-black text-paper-white font-medium' : 'text-slate-gray hover:text-ink-black'}`}
               >
                 {n}
               </button>
@@ -122,45 +123,68 @@ const WhyILose: React.FC<{ username: string }> = ({ username }) => {
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-100 text-red-600 p-4 rounded-2xl flex items-center gap-3">
+        <div className="bg-paper-white border border-red-200 text-red-600 p-4 rounded-card flex items-center gap-3 text-sm">
           <AlertCircle className="w-5 h-5 shrink-0" />
           <p>{error}</p>
         </div>
       )}
 
       {loading && (
-        <div className="bg-white rounded-3xl p-10 border border-gray-100 flex items-center justify-center gap-3 text-gray-500">
-          <Loader2 className="w-5 h-5 animate-spin" /> Reading your games, one month at a time
+        <div className="bg-mist-gray rounded-card p-12 flex items-center justify-center gap-3 text-slate-gray text-sm">
+          <Loader2 className="w-4 h-4 animate-spin text-ink-black" /> Reading your games archive, one month at a time...
         </div>
       )}
 
       {!loading && !error && records.length > 0 && (
         <>
-          {/* Headline */}
+          {/* Headline — Steep Signature Accent Peach Card */}
           {verdict.enough ? (
-            <section className="bg-gray-900 text-white rounded-3xl p-8 shadow-sm">
-              <div className="flex items-center gap-2 text-violet-300 text-xs font-semibold uppercase tracking-widest">
-                <Target className="w-4 h-4" /> The biggest leak
+            <section className="bg-blush-peach text-sienna-brown rounded-card p-8 md:p-12 space-y-4 relative overflow-hidden">
+              <div className="flex items-start justify-between gap-4">
+                <div className="space-y-3 flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs uppercase tracking-wider font-medium text-sienna-brown opacity-80 inline-flex items-center gap-1.5">
+                      <Target className="w-3.5 h-3.5" />
+                      The Biggest Leak
+                    </span>
+                  </div>
+                  <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal leading-[1.2] tracking-[-0.015em] text-sienna-brown">
+                    {verdict.main?.headline ?? 'No single leak stands out across these games.'}
+                  </h2>
+                </div>
+                <AnimatedPiece 
+                  piece="wood_king" 
+                  size={58} 
+                  alt="Chess King piece" 
+                  showShadow={false}
+                  className="shrink-0 -mt-2 opacity-90 hidden sm:inline-flex"
+                />
               </div>
-              <h2 className="text-2xl md:text-4xl font-bold tracking-tight mt-3 leading-tight">
-                {verdict.main?.headline ?? 'No single leak stands out across these games.'}
-              </h2>
-              {verdict.main && <p className="text-gray-300 mt-3">{verdict.main.detail}</p>}
+              {verdict.main && (
+                <p className="text-sienna-brown/85 text-base md:text-lg leading-relaxed font-sans max-w-3xl">
+                  {verdict.main.detail}
+                </p>
+              )}
               {verdict.others.length > 0 && (
-                <ul className="mt-6 space-y-1.5 text-sm text-gray-300 border-t border-gray-700 pt-4">
+                <ul className="mt-6 space-y-2 text-sm text-sienna-brown/80 border-t border-sienna-brown/20 pt-4 font-sans">
                   {verdict.others.map((f) => (
-                    <li key={f.key}>Also: {f.headline}</li>
+                    <li key={f.key} className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-sienna-brown opacity-60"></span>
+                      <span>Also: {f.headline}</span>
+                    </li>
                   ))}
                 </ul>
               )}
-              <button
-                onClick={downloadCard}
-                disabled={exporting}
-                className="mt-6 inline-flex items-center gap-2 bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium px-4 py-2 rounded-xl transition-colors disabled:opacity-60"
-              >
-                {exporting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
-                Download verdict card
-              </button>
+              <div className="pt-2">
+                <button
+                  onClick={downloadCard}
+                  disabled={exporting}
+                  className="inline-flex items-center gap-2 bg-ink-black hover:bg-black text-paper-white text-xs font-medium px-5 py-2.5 rounded-pill transition-colors disabled:opacity-60"
+                >
+                  {exporting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Download className="w-3.5 h-3.5" />}
+                  Download verdict card
+                </button>
+              </div>
             </section>
           ) : (
             <section className="bg-amber-50 border border-amber-100 text-amber-800 rounded-3xl p-6 flex gap-3">

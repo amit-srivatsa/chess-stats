@@ -20,59 +20,84 @@ const Header: React.FC<HeaderProps> = ({ onSearch, isLoading, currentUser, onCle
   };
 
   return (
-    <header className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
-      <div>
-        <div className="flex items-center gap-3">
-          <button 
-            type="button" 
-            onClick={onClear} 
-            className="text-left group cursor-pointer focus:outline-none"
-            title="Return to intake"
-          >
-            <h1 className="text-3xl font-bold text-gray-900 tracking-tight group-hover:text-violet-600 transition-colors">
-              Checkmate Stats
-            </h1>
-          </button>
-          {currentUser && (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-violet-50 text-violet-700 border border-violet-200/60 shadow-xs">
-              <User className="w-3.5 h-3.5" />
-              {currentUser}
-              {onClear && (
-                <button
-                  type="button"
-                  onClick={onClear}
-                  className="ml-1 text-violet-400 hover:text-violet-700 rounded-full p-0.5 hover:bg-violet-100 transition-colors"
-                  title="Switch player"
-                >
-                  <X className="w-3 h-3" />
-                </button>
-              )}
+    <header className="py-4 md:py-6 mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-border-subtle/70">
+      {/* Brand & Attribution */}
+      <div className="flex items-center gap-4">
+        <button 
+          type="button" 
+          onClick={onClear} 
+          className="text-left group cursor-pointer focus:outline-none flex items-end gap-2.5 pb-0.5"
+          title="Return to intake"
+        >
+          {/* Animated Header Chess Piece with lively bob and ground shadow */}
+          <div className="relative w-7 h-9 flex items-end justify-center shrink-0 mb-0.5">
+            <img 
+              src="./assets/pieces/wood_knight.png" 
+              alt="Chess Knight" 
+              className="w-7 h-7 object-contain animate-header-piece transition-transform duration-300 group-hover:scale-115" 
+            />
+            <div className="absolute -bottom-1 w-5 h-1.5 pointer-events-none flex items-center justify-center">
+              <svg viewBox="0 0 100 24" className="w-full h-full overflow-visible">
+                <ellipse cx="50" cy="12" rx="42" ry="7" fill="rgba(23, 25, 28, 0.12)" />
+              </svg>
+            </div>
+          </div>
+
+          {/* Perfectly baseline-aligned Brand + Attribution */}
+          <div className="flex items-baseline gap-2">
+            <span className="font-serif text-2xl md:text-[26px] leading-none font-normal tracking-tight text-ink-black group-hover:text-slate-gray transition-colors">
+              Chess Stats
             </span>
-          )}
-        </div>
-        <p className="text-gray-500 mt-1">Player Analytics Dashboard</p>
+            <span className="text-xs text-slate-gray font-normal hidden sm:inline leading-none">
+              by Amit Srivatsa
+            </span>
+          </div>
+        </button>
+
+        {currentUser && (
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-pill text-xs bg-mist-gray text-ink-black border border-border-subtle">
+            <User className="w-3 h-3 text-slate-gray" />
+            <span className="font-medium">{currentUser}</span>
+            {onClear && (
+              <button
+                type="button"
+                onClick={onClear}
+                className="ml-1 text-slate-gray hover:text-ink-black p-0.5 rounded-full transition-colors"
+                title="Switch player"
+              >
+                <X className="w-3 h-3" />
+              </button>
+            )}
+          </span>
+        )}
       </div>
 
-      <form onSubmit={handleSubmit} className="relative w-full md:w-80 group">
-        <input
-          type="text"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          placeholder="Search any username..."
-          className="w-full bg-white border border-gray-200 rounded-2xl py-3 pl-5 pr-12 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all shadow-sm"
-        />
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-violet-600 transition-colors disabled:opacity-50"
-        >
-          {isLoading ? (
-            <Loader2 className="w-5 h-5 animate-spin" />
-          ) : (
-            <Search className="w-5 h-5" />
-          )}
-        </button>
-      </form>
+      {/* Search Input */}
+      <div className="flex items-center gap-3">
+        <form onSubmit={handleSubmit} className="flex items-center gap-2">
+          <div className="relative">
+            <input
+              type="text"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              placeholder="Search Chess.com user..."
+              className="bg-mist-gray border border-transparent rounded-pill py-2 pl-4 pr-4 text-sm text-ink-black placeholder-smoke-gray focus:outline-none focus:bg-white focus:border-border-subtle transition-all w-52 sm:w-64"
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={isLoading || !inputValue.trim()}
+            className="px-4 py-2 bg-ink-black hover:bg-black text-paper-white rounded-pill text-xs font-medium disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex items-center gap-1.5 shrink-0"
+          >
+            {isLoading ? (
+              <Loader2 className="w-3.5 h-3.5 animate-spin" />
+            ) : (
+              <Search className="w-3.5 h-3.5" />
+            )}
+            <span className="hidden sm:inline">Search</span>
+          </button>
+        </form>
+      </div>
     </header>
   );
 };

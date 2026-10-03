@@ -3,36 +3,160 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Checkmate Stats: why I lose</title>
-    <meta name="description" content="Free Chess.com stats dashboard. Reads your last games in the browser and tells you where your losses come from." />
+    <title>Chess Stats — by Amit Srivatsa</title>
+    <meta name="description" content="A quiet in-browser Chess.com analytics tool that uncovers where your losses actually come from. Built by Amit." />
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
+
+    <!-- Google Fonts: Source Serif 4 (Signifier alternative) & Inter (Söhne alternative) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;430;450;480;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;1,8..60,400;1,8..60,500&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Play CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-      body {
-        font-family: 'Inter', sans-serif;
-        background-color: #F3F4F6; /* gray-100 */
-        color: #111827; /* gray-900 */
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'ink-black': '#17191c',
+              'paper-white': '#ffffff',
+              'mist-gray': '#f2f2f3',
+              'fog-white': '#fafafb',
+              'slate-gray': '#777b86',
+              'ash-gray': '#979799',
+              'smoke-gray': '#a3a6af',
+              'blush-peach': '#fbe1d1',
+              'sienna-brown': '#5d2a1a',
+              'border-subtle': '#ececec',
+            },
+            fontFamily: {
+              serif: ['"Source Serif 4"', 'Georgia', 'ui-serif', 'serif'],
+              sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
+            },
+            borderRadius: {
+              'card': '24px',
+              'small-card': '16px',
+              'elevated': '20px',
+              'pill': '9999px',
+            },
+            boxShadow: {
+              'artifact': '0 0 0 1px rgba(4,23,43,0.05), 0 20px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.04)',
+              'subtle': '0 0 0 1px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 0, 0, 0.04)',
+            }
+          }
+        }
       }
-      /* Custom Scrollbar for Webkit */
+    </script>
+    <style>
+      :root {
+        --color-ink-black: #17191c;
+        --color-paper-white: #ffffff;
+        --color-mist-gray: #f2f2f3;
+        --color-fog-white: #fafafb;
+        --color-slate-gray: #777b86;
+        --color-ash-gray: #979799;
+        --color-smoke-gray: #a3a6af;
+        --color-blush-peach: #fbe1d1;
+        --color-sienna-brown: #5d2a1a;
+
+        --font-signifier: 'Source Serif 4', Georgia, serif;
+        --font-sohne: 'Inter', ui-sans-serif, system-ui, sans-serif;
+      }
+
+      body {
+        font-family: var(--font-sohne);
+        background-color: var(--color-paper-white);
+        color: var(--color-ink-black);
+        margin: 0;
+        padding: 0;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .font-serif-display {
+        font-family: var(--font-signifier);
+        font-weight: 400;
+        line-height: 1.25;
+      }
+
+      /* Subtle, weightless piece floating animations */
+      @keyframes subtle-float {
+        0%, 100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-8px) rotate(-1deg);
+        }
+      }
+
+      @keyframes subtle-float-alt {
+        0%, 100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-6px) rotate(1deg);
+        }
+      }
+
+      @keyframes subtle-shadow {
+        0%, 100% {
+          transform: scale(1);
+          opacity: 0.18;
+        }
+        50% {
+          transform: scale(0.85);
+          opacity: 0.08;
+        }
+      }
+
+      .animate-piece-float {
+        animation: subtle-float 6.5s ease-in-out infinite;
+      }
+
+      .animate-piece-float-alt {
+        animation: subtle-float-alt 7.5s ease-in-out infinite;
+      }
+
+      .animate-piece-shadow {
+        animation: subtle-shadow 6.5s ease-in-out infinite;
+      }
+
+      @keyframes header-bob {
+        0%, 100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        35% {
+          transform: translateY(-5px) rotate(-3deg);
+        }
+        70% {
+          transform: translateY(-2px) rotate(2deg);
+        }
+      }
+
+      .animate-header-piece {
+        animation: header-bob 3.5s ease-in-out infinite;
+        transform-origin: center bottom;
+      }
+
+      /* Custom Scrollbar */
       ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
+        width: 6px;
+        height: 6px;
       }
       ::-webkit-scrollbar-track {
-        background: #F3F4F6; 
+        background: #fafafb; 
       }
       ::-webkit-scrollbar-thumb {
-        background: #D1D5DB; 
-        border-radius: 4px;
+        background: #e2e2e4; 
+        border-radius: 9999px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #9CA3AF; 
+        background: #c7c7cb; 
       }
     </style>
-</head>
+  </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>

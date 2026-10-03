@@ -11,25 +11,25 @@ interface StatCardProps {
   isPurple?: boolean;
 }
 
-const StatCard: React.FC<StatCardProps> = ({ title, icon, value, subtitle, isPurple = false }) => {
+const StatCard: React.FC<StatCardProps> = ({ title, icon, value, subtitle }) => {
   return (
-    <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 flex flex-col justify-between h-full hover:shadow-md transition-shadow">
+    <div className="bg-paper-white rounded-card p-6 border border-border-subtle shadow-subtle flex flex-col justify-between h-full">
       <div className="flex items-start justify-between mb-2">
-        <div className={`p-3 rounded-2xl ${isPurple ? 'bg-violet-50 text-violet-600' : 'bg-cyan-50 text-cyan-600'}`}>
+        <div className="p-2.5 rounded-xl bg-mist-gray text-ink-black">
            {icon}
         </div>
         {subtitle && (
-            <span className="text-xs font-semibold bg-gray-100 text-gray-500 px-2 py-1 rounded-full">
+            <span className="text-xs text-slate-gray bg-mist-gray px-2.5 py-0.5 rounded-pill font-normal">
                 {subtitle}
             </span>
         )}
       </div>
 
-      <div>
-        <div className="text-4xl font-bold text-gray-900 mt-2 mb-1 tracking-tight">
+      <div className="pt-2">
+        <div className="text-3xl font-medium text-ink-black tracking-tight font-sans">
           {value}
         </div>
-        <div className="text-gray-500 font-medium text-sm">
+        <div className="text-slate-gray text-xs mt-1 font-normal">
           {title}
         </div>
       </div>

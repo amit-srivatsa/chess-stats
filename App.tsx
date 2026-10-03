@@ -178,7 +178,7 @@ function App() {
       )}
 
       {username && (
-        <nav className="flex gap-2 mb-8" aria-label="Views">
+        <nav className="flex items-center gap-2.5 mb-8" aria-label="Views">
           {([
             ['dashboard', 'Dashboard', LayoutDashboard],
             ['why', 'Why I lose', Target],
@@ -187,11 +187,13 @@ function App() {
               key={key}
               onClick={() => openTab(key)}
               aria-current={tab === key ? 'page' : undefined}
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-2xl text-sm font-medium transition-colors ${
-                tab === key ? 'bg-gray-900 text-white shadow-sm' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
+              className={`inline-flex items-center gap-2 px-5 py-2 rounded-pill text-xs font-medium transition-all ${
+                tab === key 
+                  ? 'bg-ink-black text-paper-white' 
+                  : 'bg-transparent text-ink-black border border-border-subtle hover:border-ink-black'
               }`}
             >
-              <Icon className="w-4 h-4" /> {label}
+              <Icon className="w-3.5 h-3.5" /> {label}
             </button>
           ))}
         </nav>
