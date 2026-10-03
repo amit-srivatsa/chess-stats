@@ -32,6 +32,13 @@ const WhyILose: React.FC<{ username: string }> = ({ username }) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!username || !username.trim()) {
+      setRecords([]);
+      setLoading(false);
+      setError(null);
+      setProgress(null);
+      return;
+    }
     let cancelled = false;
     setLoading(true);
     setError(null);
@@ -73,6 +80,18 @@ const WhyILose: React.FC<{ username: string }> = ({ username }) => {
       setExporting(false);
     }
   };
+
+  if (!username || !username.trim()) {
+    return (
+      <div className="bg-white rounded-3xl border border-gray-200 p-12 text-center shadow-sm max-w-2xl mx-auto">
+        <Target className="w-12 h-12 text-violet-500 mx-auto mb-4" />
+        <h3 className="text-xl font-bold text-gray-900 mb-2">No player selected</h3>
+        <p className="text-gray-500 max-w-md mx-auto">
+          Enter a Chess.com username above to diagnose loss patterns, clock trouble, and opening leaks.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
