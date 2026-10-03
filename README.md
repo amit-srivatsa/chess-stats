@@ -4,6 +4,8 @@ A free Chess.com stats dashboard with a second view, **Why I lose**, that reads 
 
 Built for [Buildtober](https://github.com/amit-srivatsa) day 3 (3 October 2026): one tool a day through October.
 
+**Live Demo**: [https://amit-srivatsa.github.io/chess-stats/](https://amit-srivatsa.github.io/chess-stats/)
+
 ![Why I lose](docs/screenshots/02-why-i-lose-full.png)
 
 ## Two views
@@ -94,4 +96,4 @@ Attribution helps support open-source development and is greatly appreciated!
 
 ---
 
-**Try it out**: Search for any Chess.com username to see their public stats instantly!
+**Try it out**: Visit [https://amit-srivatsa.github.io/chess-stats/](https://amit-srivatsa.github.io/chess-stats/) or search for any Chess.com username to see their public stats instantly!
